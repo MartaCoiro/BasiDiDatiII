@@ -1,0 +1,460 @@
+/* Aggiungi un font personalizzato */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Applica il font Lobster al testo di CineCharm */
+.charm-up, .charm-down {
+    font-family: 'Roboto', sans-serif;
+    font-size: 10rem; /* Dimensione del font aumentata per renderlo più audace */
+    color: #fff; /* Colore bianco */
+    font-weight: bold; /* Testo più spesso */   
+}
+
+/* Stili per la barra di navigazione */
+.btn-outline-success{
+    border-color: red;
+    color: red;
+}
+.btn-outline-success:hover {
+    border-color: white;
+    color: red;
+    background-color: white; /* Aggiungi questo per dare un colore di sfondo rosso durante il passaggio del mouse */
+}
+
+
+/* Stili per la barra di navigazione */
+.navbar {
+    background-color: #333;
+}
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.navbar a.active {
+    background-color: #666;
+    color: white;
+}
+
+.pink-background {
+    background-color:#696969; /* Colore rosa #025669 */
+}
+
+/*movimento card*/
+.content-container.loaded {
+    opacity: 1; /* Mostra il contenitore quando la classe "loaded" viene aggiunta */
+}
+
+.content-container {
+    opacity: 0; /* Nasconde il contenitore della lista dei film inizialmente */
+   transition: opacity 2s ease-in-out; /* Applica una transizione all'opacità con una durata di 2 secondi */
+}
+
+@keyframes move-up {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes move-down {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.charm-up {
+    display: inline-block;
+    animation: move-up 2s infinite; /* Applica l'animazione alla parola "Cine" */
+}
+
+.charm-down {
+    display: inline-block;
+    animation: move-down 2s infinite; /* Applica l'animazione alla parola "Charm" */
+}
+
+
+body {
+    background-color: #f3f4f6; /* Colore di sfondo più chiaro */
+    color: #000000; /* Colore del testo */
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 5px 0;
+}
+
+a {
+    display: block;
+    margin-top: 20px;
+}
+
+.movie-details {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.movie-details h3 {
+    margin-top: 0;
+}
+
+.movie-details p {
+    margin-bottom: 20px;
+}
+
+a.btn-primary {
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+a.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.card {
+    transition: transform 0.3s ease; 
+} 
+
+.card:hover {
+    transform: translateY(-20px); /* Sposta leggermente verso l'alto al passaggio del mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombra più pronunciata */
+}
+
+
+.card:hover ~ .card {
+    transform: translateX(10px); /* Sposta leggermente verso destra le carte successive */
+}
+
+.custom-alert {
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    position: relative;
+    opacity: 0.9;
+}
+
+.custom-alert-success {
+    background-color: #4CAF50; /* Verde */
+}
+
+.custom-alert-info {
+    background-color: #2196F3; /* Blu */
+}
+
+.custom-alert-warning {
+    background-color: #ff9800; /* Arancione */
+}
+
+.custom-alert-danger {
+    background-color: #f44336; /* Rosso */
+}
+
+.custom-alert .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.custom-alert .closebtn:hover {
+    color: black;
+}
+
+/* Stili per il messaggio di aggiunta ai Preferiti */
+.card{
+    background-color:  #1f1f1f; /* Sfondo bianco */
+    color: white; /* Testo nero */
+    border: none; /* Bordo leggero grigio */
+}
+
+.btn-danger{
+    margin-top: 12px;
+}
+
+.add-to-favorites-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Assicura che il messaggio sia sopra gli altri elementi */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+/* Animazione per l'entrata e l'uscita del messaggio */
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Stili per il messaggio di avviso se il film è già nei preferiti */
+.already-in-favorites-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Assicura che il messaggio sia sopra gli altri elementi */
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/*Stili Login*/
+.btn-block{
+    border-color: red;
+    color: white;
+    background-color: red;
+}
+
+.btn-block:hover{
+    background-color: white; /* Rosso più scuro al passaggio del mouse */
+    border-color: red;
+    color: red;
+}
+
+/*Stili Top 10 e Lista film e serie*/
+.container-top-10 {
+    max-width: 1200px; /* Larghezza massima della sezione */
+    margin: 0 auto; /* Centra il contenuto orizzontalmente */
+    text-align: center; /* Centra il contenuto orizzontalmente */
+    padding: 30px 15px; /* Padding intorno al contenuto */
+    background-color: #141414; /* Colore di sfondo scuro */
+    color: #fff; /* Colore del testo bianco */
+    border-radius: 10px; /* Bordo arrotondato */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    overflow: hidden; /* Nasconde il contenuto che va oltre il bordo */
+    position: relative; /* Assicura che le frecce siano posizionate correttamente rispetto a questo contenitore */
+}
+
+.container-top-10 h2,
+.content-container h2{
+    font-family: 'Roboto', sans-serif; /* Font personalizzato */
+    font-size: 2.5rem; /* Dimensione del carattere */
+    margin-bottom: 30px; /* Spazio inferiore */
+}
+
+.top-10-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* Nasconde la barra di scorrimento in Internet Explorer e Edge */
+    scrollbar-width: none; /* Nasconde la barra di scorrimento in Firefox */
+    max-width: 100%; /* Assicura che la griglia non superi la larghezza del contenitore */
+    margin: 0 auto; /* Centra la griglia orizzontalmente */
+    padding-bottom: 20px; /* Spazio inferiore per evitare il taglio delle ultime card */
+}
+
+.top-10-container::-webkit-scrollbar {
+    display: none; /* Nasconde la barra di scorrimento in Chrome, Safari e Opera */
+}
+
+.top-10-container .card,
+.content-container .card {
+    flex: 0 0 auto;
+    width: 300px; /* Larghezza fissa di ogni card */
+    margin-right: 20px; /* Spazio tra le card */
+    background-color: #1f1f1f; /* Sfondo scuro delle card */
+    color: #fff; /* Testo bianco */
+    border: none; /* Nessun bordo */
+    transition: transform 0.3s ease; /* Transizione animata */
+    border-radius: 10px; /* Bordo arrotondato */
+}
+
+.top-10-container .card:hover,
+.content-container .card:hover{
+    transform: translateY(-10px); /* Effetto di sollevamento al passaggio del mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Ombra più pronunciata */
+}
+
+.top-10-container img,
+.content-container img {
+    border-radius: 8px 8px 0 0; /* Angoli arrotondati per l'immagine */
+    max-width: 100%; /* Immagini al massimo della larghezza del contenitore */
+}
+
+.top-10-container .card-body,
+.content-container .card-body {
+    padding: 20px;
+}
+
+.top-10-container .card-title,
+.content-container .card-title {
+    font-size: 1.5rem; /* Dimensione del titolo */
+    margin-bottom: 10px; /* Spazio inferiore */
+}
+
+.top-10-container .card-text,
+.content-container .card-text {
+    font-size: 1rem; /* Dimensione del testo */
+    opacity: 0.7; /* Opacità del testo */
+}
+
+.top-10-container .btn-primary,
+.content-container .btn-primary {
+    background-color: #e50914; /* Rosso Netflix */
+    border-color: #e50914; /* Colore del bordo */
+    transition: background-color 0.3s ease; /* Transizione animata */
+}
+
+.top-10-container .btn-primary:hover,
+.content-container .btn-primary:hover {
+    background-color: #ff1418; /* Rosso più scuro al passaggio del mouse */
+}
+.prev-btn, .next-btn {
+    /* Mantieni le proprietà di posizionamento */
+    position: relative; /* Usa la posizione relativa per essere posizionati all'interno del loro contenitore */
+    display: inline-block; /* Assicura che i pulsanti siano visualizzati su una riga orizzontale */
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.prev-btn {
+    margin-right: 10px; /* Spazio tra i pulsanti */
+    color: #ff1418;
+}
+
+.next-btn {
+    margin-left: 10px; /* Spazio tra i pulsanti */
+    color: #ff1418;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background-color: #e50914; /* Cambia il colore di sfondo al passaggio del mouse a rosso */
+    color: #fff; /* Cambia il colore del testo a bianco */
+    transition: background-color 0.3s ease; /* Aggiungi una transizione al cambiamento di colore */
+}
+
+.prev-btn:active,
+.next-btn:active {
+    background-color: #ff1418; /* Colore di sfondo rosso al clic */
+    color: #fff; /* Colore del testo bianco al clic */
+}
+
+.content-container {
+    max-width: 1200px; /* Larghezza massima della sezione */
+    text-align: center; /* Centra il contenuto orizzontalmente */
+    padding: 30px 15px; /* Padding intorno al contenuto */
+    background-color: #141414; /* Colore di sfondo scuro */
+    color: #fff; /* Colore del testo bianco */
+    border-radius: 10px; /* Bordo arrotondato */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    overflow: hidden; /* Nasconde il contenuto che va oltre il bordo */
+    position: relative; /* Assicura che le frecce siano posizionate correttamente rispetto a questo contenitore */
+    margin: 60px auto 0; /* Aggiunge un margine superiore di 40px e centra il contenuto orizzontalmente */
+    
+}
+
+.welcome-message {
+    position: relative;
+    display: inline-block;
+    color: white;
+    margin-right: 15px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.welcome-message:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block; /* Rende le voci verticali */
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+.card-img-top {
+   /* width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;*/
+    max-width: 100%;
+    height: auto
+    
+}
+.content-header {
+    margin-top: 100px; /* Spazio per la navbar */
+}
+.spazio-sotto {
+    margin-top: 30px; /* Spazio tra titolo e box */
+}
+
+
+/*Per fare in modo che le immagini abbiano tutte la stessa dimensione */
+.img-container {
+    height: 300px; /* Set a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.img-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover; /* Ensure images cover the area without distortion */
+}

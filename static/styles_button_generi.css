@@ -1,0 +1,93 @@
+/* styles.css */
+
+.titolo-generi {
+    font-size: 1.5rem; /* Dimensione del testo più grande */
+    font-weight: bold; /* Grassetto */
+    margin-bottom: 1rem; /* Margine inferiore per separare visivamente i bottoni */
+}
+
+.pill {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #333; /* Colore di sfondo grigio scuro */
+    color: #fff; /* Colore del testo bianco */
+    font-weight: 10px; /* Testo in grassetto */
+    border-radius: 3px; /* Bordo arrotondato */
+    text-decoration: none; /* Rimuove sottolineatura */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animazione */
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.pill:hover {
+    background-color: #555555; /* Cambia colore di sfondo al passaggio del mouse */
+    transform: scale(1.05); /* Ingrandisce leggermente al passaggio del mouse */
+    color: rgb(255, 55, 0);
+}
+
+
+.btn-genere {
+    color: #fff;
+    border-color: transparent;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-short { background-color: #007bff; } 
+.btn-film-noir { background-color: #28a745; } 
+.btn-family { background-color: #dc3545; } 
+.btn-western { background-color: #00a6c0; } 
+.btn-thriller { background-color: #343a40; } 
+.btn-game-show { background-color: #ffc107; }
+.btn-reality-tv { background-color: #45ff07; } 
+.btn-history { background-color: #ff6a07; } 
+.btn-fantasy { background-color: #00d3c9; } 
+.btn-news{ background-color: #9359f8; } 
+.btn-music { background-color: #ff9a93; }
+.btn-horror { background-color: #784b4b; }
+.btn-crime { background-color: #eed700; } 
+.btn-animation { background-color: #e8004d; } 
+.btn-musical { background-color: #ff85fb; } 
+.btn-drama { background-color: #0a0d5a; } 
+.btn-comedy { background-color: #ee00be; } 
+.btn-sport { background-color: #d80000; } 
+.btn-action { background-color: #15702f; } 
+.btn-romance { background-color: #e85757; } 
+.btn-documentary { background-color: #ff910b; } 
+.btn-mystery { background-color: #da83fa; } 
+.btn-war { background-color: #fa9583; } 
+.btn-biography { background-color: #90e900; } 
+.btn-adult { background-color: #eb1717; } 
+.btn-adventure { background-color: #00e6d3; } 
+.btn-talk-show { background-color: #fff700; } 
+.btn-sci-fi { background-color: #2b94f0; } 
+
+/* Effetto di zoom in avanti */
+.btn-genere:hover {
+    transform: scale(1.1); /* Zoom del 10% */
+    color: black;
+}
+
+.btnn:hover{
+    background-color: white; /* Rosso più scuro al passaggio del mouse */
+    border-color: red;
+    color: white;
+}
+
+.btn.btn-link.add-to-favorites i :hover{
+    background-color: black;
+    color: blue;
+}
+
+/*
+.btn{
+    border-color: red;
+    color: red;
+}
+*/

@@ -1,0 +1,82 @@
+body {
+    background-color: #f8f9fa;
+}
+
+h1 {
+    color: #343a40;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.table thead th {
+    background-color: #e9ecef;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.img-thumbnail {
+    width: 100px;
+    height: auto;
+}
+
+.btn-group .action-btn {
+    width: 80px; /* Specifica una larghezza fissa per entrambi i pulsanti */
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.flash {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.flash-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.flash-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.flash-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.navbar {
+    background-color: #343a40; /* Dark background */
+}
+.navbar-brand, .nav-link {
+    color: #ffffff; /* White text */
+}
+.nav-link:hover {
+    color: #f8f9fa; /* Light text on hover */
+}
+.container {
+    margin-top: 20px;
+}
+
+body {
+    padding-top: 100px; /* Space for fixed navbar */
+}
+
+.navbar-nav {
+    flex-direction: row;
+}
+

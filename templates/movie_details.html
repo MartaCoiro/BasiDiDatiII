@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.Title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles_movie_details.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        .content-container {
+            margin-top: 120px; /* Aumentato il margine superiore */
+        }
+    </style>
+</head>
+<body class="pink-background">
+    <div class="container content-container">
+         <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">CinePlus</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                {% if 'username' in session %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/generi">Genere</a>
+                        <a class="dropdown-item" href="/favorites">Preferiti</a>
+                        <a class="dropdown-item" href="/to-review">Da rivedere</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/films">Film</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/series">SerieTV</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/films">Film</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/series">SerieTV</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/generi">Generi</a>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0 mr-auto" action="{{ url_for('search', tipo='ricerca') }}" method="get">
+                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            {% if 'username' not in session %}
+            <a class="btn btn-outline-light ml-2" href="/login">Accedi</a>
+            {% else %}
+            <div class="welcome-message">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Ciao, {{ session['username'] }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteProfileModal">Elimina Account</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+
+    <div class="row">
+        <div class="col-lg-7">
+           
+            <div class="movie-details">
+                <h1>{{ movie.Title }}</h1>
+                <div class="info-item">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value" style="color: white;">{{ movie['Series or Movie'] }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Year:</span>
+                    <span class="info-value" style="color: white;">{{ movie['Release Date'] }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Genre:</span>
+                    <span class="info-value" style="color: white;">{{ movie.Genre }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label" style="color: white;">IMDb Score:</span>
+                    <span class="info-value" style="color: white;">{{ movie['IMDb Score'] }}</span>
+                </div>
+                <div class="summary mt-4">
+                    <h3>Summary</h3>
+                    <p style="color: white;">{{ movie.Summary }}</p>
+                </div>
+                <ul>
+                    {% for person_group in movie['People Involved'] %}
+                        <li>{{ person_group._id }}:</li>
+                        <ul>
+                            {% for person in person_group.people %}
+                                <li>{{ person }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </ul>
+                {% if 'username' not in session %}
+                <div class="button-group mt-4">
+                    <a href="{{ movie['IMDb Link'] }}" class="btn btn-outline-primary notsession">View on IMDb</a>
+                </div>
+                {% else %}
+                <div class="button-group mt-4">
+                    <a href="{{ movie['IMDb Link'] }}" class="btn btn-outline-primary session">View on IMDb</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-5 d-flex justify-content-center align-items-center">
+            <div class="movie-image-container text-center">
+                <img class="img-fluid rounded-lg movie-image" src="{{ movie.Image }}" alt="{{ movie.Title }}">
+            </div>
+        </div>
+      
+    </div>
+    
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProfileModalLabel">Elimina Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Sei sicuro di voler eliminare il tuo account? Questa operazione non può essere annullata.
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ url_for('delete_profile') }}" method="post">
+                        <button type="submit" class="btn btn-danger">Elimina Account</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const imdbLink = document.querySelector('.notsession');
+            
+            imdbLink.addEventListener('click', (event) => {
+                event.preventDefault(); // Previene l'apertura immediata del link
+
+                const imdbUrl = imdbLink.href;
+    
+                window.open(imdbUrl, '_blank'); // Apre il link IMDb in una nuova finestra
+            });
+        });     
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const imdbLink = document.querySelector('.session');
+        
+        imdbLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Previene l'apertura immediata del link
+            const movieId = "{{ movie._id }}"; // Assicurati che l'ID del film sia disponibile
+            
+            fetch(`/add_to_review/${movieId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'added_to_review' || data.status === 'already_in_to_review') {
+                    // Dopo aver aggiornato la lista, apri il link IMDb
+                    window.open(imdbLink.href, '_blank');
+                } else if (data.status === 'login_required') {
+                    alert('Devi effettuare il login per aggiungere alla lista "DA RIVEDERE".');
+                } else {
+                    alert('Si è verificato un errore. Riprova.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    });
+</script>
+
+         
+</body>
+</html>

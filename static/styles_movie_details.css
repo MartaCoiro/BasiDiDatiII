@@ -1,0 +1,231 @@
+/* styles_movie_details.css */
+
+/* Stili per il contenitore principale */
+.container {
+    background-color: white; /* Sfondo bianco */
+    color: black; /* Testo nero */
+    padding: 20px; /* Padding interno */
+    border-radius: 8px; /* Bordi arrotondati */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+}
+
+.container {
+    max-width: 1200px; /* Larghezza massima della sezione */
+    margin: 0 auto; /* Centra il contenuto orizzontalmente */
+    text-align: left; /* Allinea il testo a destra */
+    padding: 30px 15px; /* Padding intorno al contenuto */
+    background-color: #141414; /* Colore di sfondo scuro */
+    color: #fff; /* Colore del testo bianco */
+    border-radius: 10px; /* Bordo arrotondato */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+    overflow: hidden; /* Nasconde il contenuto che va oltre il bordo */
+    position: relative; /* Assicura che le frecce siano posizionate correttamente rispetto a questo contenitore */
+}
+
+.pink-background {
+    background-color: #696969; /* Colore rosa #025669 */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.movie-details {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.info-item {
+    margin-bottom: 0.75rem;
+}
+
+.info-label {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.info-value {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.summary h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.summary p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.button-group .btn {
+    font-size: 1rem;
+    padding: 0.5rem 1.25rem;
+}
+
+.btn-back {
+    margin-left: 0.5rem;
+}
+
+/* Stili per l'immagine del film */
+.movie-image-container {
+    margin-top: 20px; /* Spazio superiore */
+    margin-bottom: 20px; /* Spazio inferiore */
+    text-align: center; /* Allinea al centro */
+}
+
+/* Stili per l'immagine del film */
+.movie-image-container {
+    flex: 0 0 auto;
+    width: 300px; /* Larghezza fissa di ogni card */
+    margin-right: 20px; /* Spazio tra le card */
+    background-color: #1f1f1f; /* Sfondo scuro delle card */
+    color: #fff; /* Testo bianco */
+    border: none; /* Nessun bordo */
+    border-radius: 10px; /* Bordo arrotondato */
+}
+
+.movie-image {
+    width: 300px; /* Larghezza fissa */
+    height: auto; /* Altezza automatica per mantenere l'aspect ratio */
+    border-radius: 8px; /* Bordi arrotondati */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+}
+
+.movie-details .card-body {
+    padding: 20px;
+}
+
+.movie-details .card-title {
+    font-size: 1.5rem; /* Dimensione del titolo */
+    margin-bottom: 10px; /* Spazio inferiore */
+}
+
+.movie-details .card-text {
+    font-size: 1rem; /* Dimensione del testo */
+    opacity: 0.7; /* Opacità del testo */
+}
+
+
+
+/* Stili per la barra di navigazione */
+.navbar {
+    background-color: #333;
+}
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.navbar a.active {
+    background-color: #666;
+    color: white;
+}
+
+/*Stile bottone 'search'*/
+.btn-outline-success{
+    border-color: red;
+    color: red;
+}
+.btn-outline-success:hover {
+    border-color: white;
+    color: red;
+    background-color: white; /* Aggiungi questo per dare un colore di sfondo rosso durante il passaggio del mouse */
+}
+
+/*Stile bottone 'view detail'*/
+.btn-outline-primary{
+    background-color: #e50914; /* Rosso Netflix */
+    border-color: #e50914; /* Colore del bordo */
+    transition: background-color 0.3s ease; /* Transizione animata */
+    color: white
+}
+
+.btn-outline-primary:hover {
+    border-color: white;
+    color: red;
+    background-color: white; /* Aggiungi questo per dare un colore di sfondo rosso durante il passaggio del mouse */
+}
+
+/*
+.btn-block{
+    border-color: red;
+    color: white;
+    background-color: red;
+}
+
+.btn-block:hover{
+    background-color: white; /* Rosso più scuro al passaggio del mouse */
+    /*border-color: red;
+    /*color: red;
+}*/
+
+
+.welcome-message {
+    position: relative;
+    display: inline-block;
+    color: white;
+    margin-right: 15px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.welcome-message:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block; /* Rende le voci verticali */
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/*Per fare in modo che le immagini abbiano tutte la stessa dimensione */
+.img-container {
+    height: 300px; /* Set a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.img-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover; /* Ensure images cover the area without distortion */
+}
+
+.content-container {
+    margin-top: 120px; /* Increased top margin */
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script>
+        function confirmDeletion(event) {
+            if (!confirm('Sei sicuro di voler eliminare questo prodotto? Questa azione non può essere annullata.')) {
+                event.preventDefault();  // Cancella l'azione del form se l'utente annulla
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+        
+        <!-- Navbar Toggle Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Navbar Search Form -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0 mx-auto" action="{{ url_for('admin_search') }}" method="get">
+                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" style="border-color: red; color: red;" type="submit">Search</button>
+            </form>
+            
+            <!-- Right Side Links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1 class="my-4">Admin Dashboard</h1>
+        <a class="btn btn-primary mb-3" href="{{ url_for('add_product') }}">Add New Product</a>
+        
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Poster</th>
+                    <th>Title</th>
+                    <th>Release Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if search_results %}
+                    {% for product in search_results %}
+                        <tr>
+                            <td>
+                                {% if product.Image %}
+                                    <img src="{{ product.Image }}" alt="{{ product.Title }} Poster" class="img-thumbnail" style="width: 100px;">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='placeholder.png') }}" alt="No Image" class="img-thumbnail" style="width: 100px;">
+                                {% endif %}
+                            </td>
+                            <td>{{ product.Title }}</td>
+                            <td>{{ product['Release Date'] }}</td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <a href="{{ url_for('edit_product', product_id=product._id) }}" class="btn btn-warning btn-sm mb-1 action-btn">Edit</a>
+                                    <form action="{{ url_for('delete_product', product_id=product._id) }}" method="post" onsubmit="confirmDeletion(event)">
+                                        <button class="btn btn-danger btn-sm action-btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for product in products %}
+                        <tr>
+                            <td>
+                                {% if product.Image %}
+                                    <img src="{{ product.Image }}" alt="{{ product.Title }} Poster" class="img-thumbnail" style="width: 100px;">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename='placeholder.png') }}" alt="No Image" class="img-thumbnail" style="width: 100px;">
+                                {% endif %}
+                            </td>
+                            <td>{{ product.Title }}</td>
+                            <td>{{ product['Release Date'] }}</td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <a href="{{ url_for('edit_product', product_id=product._id) }}" class="btn btn-warning btn-sm mb-1 action-btn">Edit</a>
+                                    <form action="{{ url_for('delete_product', product_id=product._id) }}" method="post" onsubmit="confirmDeletion(event)">
+                                        <button class="btn btn-danger btn-sm action-btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

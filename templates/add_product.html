@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <script>
+        function addRoleField() {
+            const rolesContainer = document.getElementById('roles-container');
+            const roleGroup = document.createElement('div');
+            roleGroup.className = 'form-group role-group';
+            
+            const roleName = document.createElement('input');
+            roleName.type = 'text';
+            roleName.name = 'role_name[]';
+            roleName.placeholder = 'Role (e.g., Director)';
+            roleName.className = 'form-control mb-2';
+
+            const personName = document.createElement('input');
+            personName.type = 'text';
+            personName.name = 'person_name[]';
+            personName.placeholder = 'Name';
+            personName.className = 'form-control mb-2';
+            
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.className = 'btn btn-danger mb-2';
+            removeButton.onclick = function() {
+                rolesContainer.removeChild(roleGroup);
+            };
+            removeButton.textContent = 'Remove';
+
+            roleGroup.appendChild(roleName);
+            roleGroup.appendChild(personName);
+            roleGroup.appendChild(removeButton);
+            rolesContainer.appendChild(roleGroup);
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+       
+        <!-- Navbar Toggle Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+       
+        <!-- Navbar Search Form -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0 mx-auto" action="{{ url_for('admin_search') }}" method="get">
+                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" style="border-color: red; color: red" type="submit">Search</button>
+            </form>
+            <!-- Right Side Links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="my-4">Add Product</h1>
+        <form action="{{ url_for('add_product') }}" method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre</label>
+                <select class="form-control" id="genre" name="genre[]" multiple required>
+                    {% for genre in generi %}
+                        <option value="{{ genre }}">{{ genre }}</option>
+                    {% endfor %}
+                </select>
+                <small class="form-text text-muted">Tieni premuto il tasto Ctrl (Windows) o Command (Mac) per selezionare più opzioni.</small>
+            </div>
+            <div class="form-group">
+                <label for="release_date">Release Date:</label>
+                <input type="date" id="release_date" name="release_date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="series_or_movie">Type:</label>
+                <select id="series_or_movie" name="series_or_movie" class="form-control" required>
+                    <option value="Movie">Movie</option>
+                    <option value="Series">Series</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="imdb_score">IMDb Score:</label>
+                <input type="number" step="0.1" id="imdb_score" name="imdb_score" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="imdb_link">IMDb Link:</label>
+                <input type="url" id="imdb_link" name="imdb_link" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="summary">Summary:</label>
+                <textarea id="summary" name="summary" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image URL:</label>
+                <input type="url" id="image" name="image" class="form-control" required>
+            </div>
+            <div id="roles-container">
+                <h4>Roles</h4>
+                <div class="form-group role-group">
+                    <input type="text" name="role_name[]" placeholder="Role (e.g., Director)" class="form-control mb-2">
+                    <input type="text" name="person_name[]" placeholder="Name" class="form-control mb-2">
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" onclick="addRoleField()">Add Another Role</button>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+        <a class="btn btn-outline-secondary mt-3" href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a

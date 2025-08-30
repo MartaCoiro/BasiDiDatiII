@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinePlus</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+
+</head>
+<body class="pink-background">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="/">CinePlus</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                {% if 'username' in session %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/generi">Genere</a>
+                        <a class="dropdown-item" href="/favorites">Preferiti</a>
+                        <a class="dropdown-item" href="/to-review">Da rivedere</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/films">Film</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/series">SerieTV</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/films">Film</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/series">SerieTV</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/generi">Generi</a>
+                </li>
+                {% endif %}
+            </ul>
+            <form class="form-inline my-2 my-lg-0 mr-auto" action="{{ url_for('search', tipo='ricerca') }}" method="get">
+                <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            {% if 'username' not in session %}
+            <a class="btn btn-outline-light ml-2" href="/login">Accedi</a>
+            {% else %}
+            <div class="welcome-message">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Ciao, {{ session['username'] }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteProfileModal">Elimina Account</a>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Intestazione del sito -->
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <h1 class="my-4 display-1"><span class="charm-up">Cine</span><span class="charm-down">Plus</span></h1>
+    </div>
+
+    <!-- Messaggio di aggiunta ai preferiti -->
+    <div id="add-to-favorites-message" class="add-to-favorites-message">
+        Aggiunto ai Preferiti!
+    </div>
+
+    {% if tipo != 'ricerca'%}
+    <div class="container container-top-10">
+        <h2>Top 10</h2>
+        <div class="d-flex flex-nowrap top-10-container position-relative">
+            <!-- Iterazione per mostrare le card dei film -->
+            {% for movie in top_10 %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top img-container" src="{{ movie.Image }}" alt="{{ movie.Title }}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ movie.Title }}</h4>
+                        <p class="card-text">{{ movie['Release Date'] }} - {{ movie.Genre }}</p>
+                        <a href="{{ url_for('movie_details', movie_id=movie._id) }}" class="btn btn-primary">View
+                            Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Frecce di navigazione -->
+        <button class="btn btn-outline-primary mt-2 prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="btn btn-outline-primary mt-2 ml-2 next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    {% endif %}
+
+    <!-- JavaScript per gestire lo scorrimento orizzontale -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var scrollStep = 300; // Passo di scorrimento in pixel
+            var container = $('.top-10-container'); // Contenitore da animare
+
+            $('.next-btn').on('click', function () {
+                var currentScrollLeft = container.scrollLeft();
+                container.animate({
+                    scrollLeft: currentScrollLeft + scrollStep
+                }, 300);
+            });
+
+            $('.prev-btn').on('click', function () {
+                var currentScrollLeft = container.scrollLeft();
+                container.animate({
+                    scrollLeft: currentScrollLeft - scrollStep
+                }, 300);
+            });
+        });
+    </script>
+
+    <div class="container content-container">
+        <div class="row">
+            <!-- Cards -->
+            {% for movie in movies_and_series %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top img-container" src="{{ movie.Image }}" alt="{{ movie.Title }}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ movie.Title }}</h4>
+                        <p class="card-text">{{ movie['Release Date'] }} - {{ movie.Genre }}</p>
+                        <a href="{{ url_for('movie_details', movie_id=movie._id) }}" class="btn btn-primary">View Details</a>
+                        {% if 'username' in session %}
+                        <a href="#" class="btn btn-link add-to-favorites" data-movie-id="{{ movie._id }}">
+                            <i class="fa fa-heart text-danger"></i> Add to Favorites
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- End of Cards -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProfileModalLabel">Elimina Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Sei sicuro di voler eliminare il tuo account? Questa operazione non può essere annullata.
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ url_for('delete_profile') }}" method="post">
+                        <button type="submit" class="btn btn-danger">Elimina Account</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            // Gestisce il clic sull'icona del cuore per aggiungere ai Preferiti
+            $(".add-to-favorites").click(function(event){
+                event.preventDefault();
+                var movieId = $(this).data('movie-id');
+                $.ajax({
+                    url: '/add_to_favorites/' + movieId,
+                    type: 'POST',
+                    success: function(response){
+                        if (response.status === 'added_to_favorites') {
+                            $('#add-to-favorites-message').text('Aggiunto ai Preferiti!').fadeIn().delay(2000).fadeOut();
+                        } else if (response.status === 'already_in_favorites') {
+                            $('#add-to-favorites-message').text('Già nei tuoi preferiti.').fadeIn().delay(2000).fadeOut();
+                        } else {
+                            alert('Si è verificato un errore durante l\'aggiunta ai Preferiti.');
+                        }
+                    },
+                    error: function(error){
+                        alert('Si è verificato un errore durante l\'aggiunta ai Preferiti.');
+                    }
+                });
+            });
+
+            // Ritarda il caricamento della lista dei film e mostra l'animazione
+            setTimeout(function(){
+                $(".content-container").addClass("loaded");
+            }, 1500);
+        });
+    </script>
+
+</body>
+</html>
